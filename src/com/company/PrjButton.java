@@ -12,6 +12,7 @@ public class PrjButton extends JFrame {
     JButton mButton; //Medicine Button
     JButton pButton; //Patient Button
     JButton gButton; //Patient Button
+    JButton viewButton; // viewing all employees
 
     JMenuBar menuBar; //MenuBar
     JMenu fileMenu;
@@ -32,18 +33,18 @@ public class PrjButton extends JFrame {
     Medicine md;
     Nurses nr;
     Managers g;
+    View viewing;
 
 
     public PrjButton() {
-
-
-        JFrame f = new JFrame();
+        super("hospital");
+        //JFrame f = new JFrame();
         ImageIcon hos = new ImageIcon(getClass().getClassLoader().getResource("com/company/hospital.png"));
-        f.setIconImage(hos.getImage());
-        f.setTitle("Hospital");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.getContentPane().setBackground(new Color(255, 208, 198));
-        f.setLayout(new GridLayout(2,1));
+        this.setIconImage(hos.getImage());
+        this.setTitle("Hospital");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(new Color(255, 208, 198));
+        this.setLayout(new GridLayout(2,3));
 
 
 
@@ -57,6 +58,7 @@ public class PrjButton extends JFrame {
         mButton = new JButton();
         pButton = new JButton();
         gButton = new JButton();
+        viewButton = new JButton();
 
         menuBar = new JMenuBar();
 
@@ -80,6 +82,7 @@ public class PrjButton extends JFrame {
         Icon mIcon = new ImageIcon(getClass().getResource("medicine.png"));
         Icon pIcon = new ImageIcon(getClass().getResource("patient.png"));
         Icon gIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/manager.png"));
+        Icon viewIcon = new ImageIcon(getClass().getResource("medical-history.png"));
 
 
 
@@ -91,12 +94,14 @@ public class PrjButton extends JFrame {
         mButton = new JButton("Medicine",mIcon);
         pButton = new JButton("Patient",pIcon);
         gButton = new JButton("Manager",gIcon);
+        viewButton = new JButton("View" , viewIcon);
 
         dButton.setFont(new Font( null, Font.ITALIC,25));
         nButton.setFont(new Font( null, Font.ITALIC,25));
         mButton.setFont(new Font( null, Font.ITALIC,25));
         pButton.setFont(new Font( null, Font.ITALIC,25));
         gButton.setFont(new Font( null, Font.ITALIC,25));
+        viewButton.setFont(new Font( null, Font.ITALIC,25));
 
         dButton.setHorizontalTextPosition(SwingConstants.CENTER);		//Text Position
         dButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -108,16 +113,18 @@ public class PrjButton extends JFrame {
         pButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         gButton.setVerticalTextPosition(SwingConstants.CENTER);
         gButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        viewButton.setVerticalTextPosition(SwingConstants.CENTER);
+        viewButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 
 
-        f.add(dButton);
-        f.add(nButton);
-        f.add(mButton);
-        f.add(pButton);
-        f.add(gButton);
+        this.add(dButton);
+        this.add(nButton);
+        this.add(mButton);
+        this.add(pButton);
+        this.add(gButton);
+        this.add(viewButton);
 
-        f.pack();
-        f.setVisible(true);
+
 
 
         fileMenu.add(loadItem);			//MenuBar
@@ -140,6 +147,11 @@ public class PrjButton extends JFrame {
         this.setJMenuBar(menuBar);
 
 
+
+        this.pack();
+        this.setVisible(true);
+
+
         ButonHandler handler = new ButonHandler();			//Handler
 
         dButton.addActionListener(handler);
@@ -147,6 +159,7 @@ public class PrjButton extends JFrame {
         mButton.addActionListener(handler);
         pButton.addActionListener(handler);
         gButton.addActionListener(handler);
+        viewButton.addActionListener(handler);
 
         loadItem.addActionListener(handler);
         saveItem.addActionListener(handler);
@@ -220,12 +233,11 @@ public class PrjButton extends JFrame {
             if(e.getSource()==gButton) {
                 g = new Managers();	//Open Form Method
                 g.setTitle("Manager");
-                g.setLayout(new GridLayout(4,4));
+                g.setLayout(new GridLayout(1,2));
                 g.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                g.setSize(500,500);
+                g.setSize(500,250);
                 ImageIcon gIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/manager.png"));
                 g.setIconImage(gIcon.getImage());
-                g.pack();
                 g.setVisible(true);
                 g.getContentPane().setBackground(new Color(255, 208, 198));
             }
@@ -268,6 +280,14 @@ public class PrjButton extends JFrame {
                 g.setSize(500,500);
                 g.setVisible(true);
                 g.getContentPane().setBackground(new Color(255, 208, 198));
+            }
+
+            if(e.getSource()==viewButton) {
+
+                viewing = new View();
+                String[] args = {};
+                View.main(args);
+
             }
 
         }

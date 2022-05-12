@@ -98,8 +98,8 @@ public class Medicine extends JFrame {
         Sdate.addActionListener(handler);
         quantity.addActionListener(handler);
         NameField.addActionListener(handler);
-       
-
+        available.addActionListener(handler);
+        unavailable.addActionListener(handler);
 
 
     	
@@ -208,6 +208,17 @@ public class Medicine extends JFrame {
                 }
                 else JOptionPane.showMessageDialog(null, "No changes have been made");
 
+            }
+
+
+            if (e.getSource() == unavailable){
+                quantity.setText("0");
+                quantity.setEnabled(false);
+
+            }
+            else if (e.getSource() == available){
+                quantity.setEnabled(true);
+                quantity.setText("");
             }
             
 

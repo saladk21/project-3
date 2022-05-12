@@ -35,6 +35,7 @@ public class Patients extends JFrame {
     JComboBox<String>cases;
     JTextField sIll;
     JLabel illLabel;
+    JLabel caseLabel;
 
     JButton confirm;
     JButton cancel;
@@ -53,6 +54,9 @@ public class Patients extends JFrame {
         add(male);
         add(female);
 
+        caseLabel = new JLabel("Case");
+        add(caseLabel);
+
         genderGrp = new ButtonGroup();			//Button Group
         genderGrp.add(male);
         genderGrp.add(female);
@@ -60,6 +64,7 @@ public class Patients extends JFrame {
         cases = new JComboBox<String>(pCase);
         cases.setMaximumRowCount(6);
         add(cases);
+
 
         pNameJtxt = new JTextField(25);			//Entering Name
         nLabel = new JLabel("Name: ");
@@ -75,6 +80,8 @@ public class Patients extends JFrame {
         illLabel = new JLabel("Illnes Description:  ");
         add(illLabel);
         add(sIll);
+
+
 
         confirm = new JButton("Confirm");  //Confirm Button
         cancel = new JButton("Cancel");
@@ -200,7 +207,7 @@ public class Patients extends JFrame {
                 if(e.getSource()==cancel) {
                     System.exit(0);
                 }
-                if(e.getSource()==male) {
+                if(e.getSource()==male) { // works
                     setGender("Male");
                     System.out.println(getGender());
 

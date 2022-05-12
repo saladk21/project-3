@@ -4,141 +4,68 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
 public class Managers extends Employees{
+    JButton AddButton;
+    JButton DeleteButton;
 
-    JTextField Gname;
-    JLabel nLabel;
-    JLabel genderLabel;
-    JRadioButton male;
-    JRadioButton female;
-    ButtonGroup gender;
-    JTextField GId;
-    JLabel idLabel;
-    JButton confirm;
-    JButton cancel;
 
-    public Managers(){
-        super();
-        setLayout(new FlowLayout());
+    public Managers() {
+        setLayout(new GridLayout(1,2));
+        ImageIcon gIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/manager.png"));
+        ImageIcon dIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/minus_manager.png"));
+        ImageIcon aIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/plus_manager.png"));
+        AddButton  = new JButton("Add" , aIcon);
+        AddButton.addActionListener(handler);
 
-        male = new JRadioButton("Male");		//Buttons
-        female = new JRadioButton("Female");
+        DeleteButton = new JButton("Delete" , dIcon);
+        DeleteButton.addActionListener(handler);
 
-        genderLabel = new JLabel("Gender: ");
+        this.setSize(500 , 500);
 
-        add(genderLabel);
-        add(male);
-        add(female);
 
-        gender = new ButtonGroup();			//Button Group
-        gender.add(male);
-        gender.add(female);
 
-        Gname = new JTextField(25);			//Entering Name
-        nLabel = new JLabel("Name: ");
-        add(nLabel);
-        add(Gname);
 
-        GId = new JTextField(10);			//Entering ID
-        idLabel = new JLabel("ID: ");
-        add(idLabel);
-        add(GId);
+        this.add(AddButton);
+        this.add(DeleteButton);
+        this.setVisible(true);
 
-        confirm = new JButton("Confirm");  //Confirm Button
-        cancel = new JButton("Cancel");
-
-        add(confirm);
-        add(cancel);
-
-        Managers.ButonHandler handler = new Managers.ButonHandler();
-
-        confirm.addActionListener(handler);
-        cancel.addActionListener(handler);
-        Gname.addActionListener(handler);
 
 
 
     }
 
-    public Managers(String mName, String mGender, int mID){
-        super(mName , mGender , mID);
-    }
+    ButonHandler handler = new ButonHandler();
 
-
-    CircularDoubleLinkedList Manager = new CircularDoubleLinkedList();
-
-    public void removeEmp(Employees emp){
-        if (Manager.getSize() == 0){
-            System.out.println("There are no employees.");
-        }
-        else
-        Manager.removeFirst();
-
-    }
-
-    public void hireEmp(Employees emp){
-        Manager.addFirst(emp.getID() , emp.getName());
-    }
-
-    @Override
-    public String toString() {
-        return "Name: " + getName() + " ID: " + getID();
-    }
-
-    public void displayEmp(){
-        Manager.forwardTraversing();
-    }
 
     private class ButonHandler implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            int key = 0;
-
-            try {
-
-                if (e.getSource() == confirm) {
-                    if (GId.getText().length() == 0) {
-                        JOptionPane.showMessageDialog(null, "Must enter an ID");
-                    } else
-                        setID(Integer.parseInt(GId.getText()));
-                    key++;
-                }
-
-            } catch (NumberFormatException exp) {
-                JOptionPane.showMessageDialog(null, "Error: You must enter an integer");
+            if (e.getSource() == AddButton){
+                Madd g = new Madd();	//Open Form Method
+                g.setTitle("Add Manager");
+                g.setLayout(new GridLayout(4,4));
+                g.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                g.setSize(500,500);
+                ImageIcon gIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/plus_manager.png"));
+                g.setIconImage(gIcon.getImage());
+                g.pack();
+                g.setVisible(true);
+                g.getContentPane().setBackground(new Color(255, 208, 198));
             }
 
-            if (e.getSource() == confirm) {
-                if (Gname.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Must enter a name");
-                } else {
-                    setName(Gname.getText());
-                    key++;
-                }
-
-
-                if (key >= 2) {
-                    JOptionPane.showMessageDialog(null, "The Changes Have Been Saved");
-                } else JOptionPane.showMessageDialog(null, "No changes have been made");
-
-            }
-
-            if (e.getSource() == cancel) {
-                System.exit(0);
-            }
-
-
-            if (e.getSource() == male) {
-                setGender("Male");
-                System.out.println(getGender());
-
-            }
-            if (e.getSource() == female) {
-                setGender("Female");
-                System.out.println(getGender());
-
+            if (e.getSource() == DeleteButton){
+                Mdelete g = new Mdelete();	//Open Form Method
+                g.setTitle("Add Manager");
+                g.setLayout(new GridLayout(4,4));
+                g.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                g.setSize(500,500);
+                ImageIcon gIcon = new ImageIcon(getClass().getClassLoader().getResource("com/company/minus_manager.png"));
+                g.setIconImage(gIcon.getImage());
+                g.pack();
+                g.setVisible(true);
+                g.getContentPane().setBackground(new Color(255, 208, 198));
             }
 
         }

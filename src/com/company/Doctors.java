@@ -3,6 +3,7 @@ package com.company;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -33,6 +34,7 @@ public class Doctors extends Employees{
     ButtonGroup gender;
     JTextField nPatient;
     JLabel NumofPatientLabel;
+    JLabel specLabel;
     JTextField DId;
     JLabel idLabel;
     String [] dWorkingHrsSt=
@@ -86,7 +88,9 @@ public class Doctors extends Employees{
 
         toLabel = new JLabel("To: ");
         fromLabel = new JLabel("From: ");
+        specLabel = new JLabel("Specialize");
 
+        add(specLabel);
         add(spec);
         add(fromLabel);
         add(wrkSt);
@@ -123,6 +127,10 @@ public class Doctors extends Employees{
         wrkSt.addActionListener(handler);
         wrkEd.addActionListener(handler);
         nPatient.addActionListener(handler);
+        male.addActionListener(handler);
+        female.addActionListener(handler);
+
+
 
     	
     }
@@ -166,9 +174,38 @@ public class Doctors extends Employees{
     }
 
 
+
+
     private class ButonHandler implements ActionListener {
     	@Override
         public void actionPerformed(ActionEvent e) {
+
+            if(e.getSource()==male) {
+                setGender("M");
+                System.out.println(getGender());
+
+            }
+            if(e.getSource()==female) {
+                setGender("F");
+                System.out.println(getGender());
+
+            }
+            if(e.getSource()== spec ) {
+
+                setSpecialize((String) spec.getSelectedItem());
+                System.out.println(getSpecialize());
+            }
+            if(e.getSource()== wrkSt ) {
+
+                setdWorkingHrs((String) wrkSt.getSelectedItem());
+                System.out.println(getdWorkingHrs());
+            }
+            if(e.getSource()== wrkEd ) {
+
+                setdWorkingHrs2((String) wrkEd.getSelectedItem());
+                System.out.println(getdWorkingHrs2());
+            }
+
             int key = 0;
 
             try {
@@ -203,12 +240,28 @@ public class Doctors extends Employees{
                         	setNumOfPatients(Integer.parseInt(nPatient.getText()));
                             key++;
                         }
-                        
-                    
+
+
 
                     
-                    if (key == 4){
+                    if (key == 3){
+                        String INSERT_1 = "INSERT INTO doctor (D_ID , Firstname , speciliaze , gender , fromworkingHours , toWorkingHours , NumOfPatients) VALUES ("+ getID() +" , '"+ getName() +"' , '"+ getSpecialize() +"'  , '" + getGender() + "' , '"+ getdWorkingHrs() +"' , '"+ getdWorkingHrs2() +"' , "+ getNumOfPatients() +")"; //
+
                         JOptionPane.showMessageDialog(null, "The Changes Have Been Saved");
+
+                        try (Connection connection = DriverManager.getConnection("jdbc:derby:HOSPITALDATABASE", "APP", "APP");
+                             Statement statement = connection.createStatement()) {
+
+                            int INSERT1_Status = statement.executeUpdate(INSERT_1);
+
+                            ResultSet rs=statement.executeQuery("SELECT D_ID FROM doctor as A WHERE A.FIRSTNAME='"+getName()+"'");
+                            rs.next();
+                            rs.close();
+
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null,ex.getMessage(),"Error in INSERT",JOptionPane.ERROR_MESSAGE);
+                        }
+
                     }
                     else JOptionPane.showMessageDialog(null, "No changes have been made");
 
@@ -219,31 +272,7 @@ public class Doctors extends Employees{
                 }
 
 
-                if(e.getSource()==male) {
-                    setGender("Male");
-                    System.out.println(getGender());
 
-                }
-                if(e.getSource()==female) {
-                    setGender("Female");
-                    System.out.println(getGender());
-
-                }
-                if(e.getSource()== spec ) {
-
-                setSpecialize((String) spec.getSelectedItem());
-                System.out.println(getSpecialize());
-                }
-                if(e.getSource()== wrkSt ) {
-
-                    setdWorkingHrs((String) wrkSt.getSelectedItem());
-                    System.out.println(getdWorkingHrs());
-                    }
-                if(e.getSource()== wrkEd ) {
-
-                    setdWorkingHrs2((String) wrkEd.getSelectedItem());
-                    System.out.println(getdWorkingHrs2());
-                    }               
     }
     }
 }
