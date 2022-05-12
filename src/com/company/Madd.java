@@ -145,7 +145,7 @@ import java.sql.*;
                 }
 
                 if (e.getSource() == cancel) {
-                    System.exit(0);
+                    dispose();
                 }
 
 

@@ -9,6 +9,9 @@ import java.sql.*;
 public class Mdelete extends Employees {
     JLabel choose;
 
+    String deletStatment = "";
+    final String DATABASE_URL = "jdbc:derby:HOSPITALDATABASE";
+
 
     JRadioButton doc;
     JRadioButton patient;
@@ -50,7 +53,12 @@ public class Mdelete extends Employees {
         group.add(nurse);
         group.add(medicine);
 
-        doc.setSelected(true);
+        idLabel = new JLabel("ID:");
+        add(idLabel);
+
+        idText = new JTextField(25);
+        add(idText);
+
 
         choose = new JLabel("Choose an option:");
         add(choose);
@@ -60,11 +68,7 @@ public class Mdelete extends Employees {
         add(nurse);
         add(medicine);
 
-        idLabel = new JLabel("ID:");
-        add(idLabel);
 
-        idText = new JTextField(25);
-        add(idText);
 
         confirm = new JButton("Confirm");  //Confirm Button
         cancel = new JButton("Cancel");
@@ -96,24 +100,51 @@ public class Mdelete extends Employees {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            if (e.getSource() == cancel){
+                dispose();
+            }
 
-                if ( e.getSource() == doc){
+
+
+            if (e.getSource() == doc){
+                setId(Integer.parseInt(idText.getText()));
+                deletStatment = "delete from doctor where D_ID="+ getId();
+            }
+
+            if (e.getSource() == nurse){
+
+                setId(Integer.parseInt(idText.getText()));
+                deletStatment = "delete from nurse where N_ID ="+ getId();
+            }
+
+            if (e.getSource() == medicine){
+
+                setId(Integer.parseInt(idText.getText()));
+                deletStatment = "delete from medicine where serialNUmber ="+ getId();
+            }
+
+            if (e.getSource() == patient){
+
+                setId(Integer.parseInt(idText.getText()));
+                deletStatment = "delete from Patients where P_ID ="+ getId();
+            }
+
+
+
                     if (e.getSource() == confirm) {
-                        setId(Integer.parseInt(idText.getText()));
 
-                        final String DATABASE_URL = "jdbc:derby:HOSPITALDATABASE";
-                        String deleteDoc = "delete from doctor where D_ID="+ getId();
 
                         // try-with-resources to connect to and query the database
                         try(
                                 Connection connection = DriverManager.getConnection(DATABASE_URL, "APP", "APP");
                                 Statement statement = connection.createStatement();
-                                Statement stmt = connection.createStatement();)
+                                Statement stmt = connection.createStatement())
                         {
                             //DELETING a doctor
 
-                            stmt.executeUpdate(deleteDoc);
-                            System.out.println("deleted");
+
+                            stmt.executeUpdate(deletStatment);
+                            JOptionPane.showMessageDialog(null,"Deleted successfully");
 
                         } // AutoCloseable objects' close methods are called now
                         catch (SQLException sqlException)
@@ -124,7 +155,7 @@ public class Mdelete extends Employees {
 
 
                     }
-                }
+
 
 
         }

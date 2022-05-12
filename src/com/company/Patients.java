@@ -205,7 +205,7 @@ public class Patients extends JFrame {
                 }
 
                 if(e.getSource()==cancel) {
-                    System.exit(0);
+                    dispose();
                 }
                 if(e.getSource()==male) { // works
                     setGender("Male");

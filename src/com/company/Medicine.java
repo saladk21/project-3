@@ -151,6 +151,20 @@ public class Medicine extends JFrame {
 	public void actionPerformed(ActionEvent e) {
         int key = 0;
 
+        if(e.getSource()==cancel) {
+            dispose();
+        }
+
+        if (e.getSource() == confirm){
+            if (NameField.getText().length() == 0){
+                JOptionPane.showMessageDialog(null , "Must enter a Name");
+            }
+            else {
+                setmName(NameField.getText());
+                key++;
+            }
+        }
+
         try {
 
             if(e.getSource()==confirm){
@@ -190,13 +204,7 @@ public class Medicine extends JFrame {
         } catch (NumberFormatException exp) {
             JOptionPane.showMessageDialog(null, "Error: You must enter an integer");
             }
-        if (NameField.getText().length() == 0){
-            JOptionPane.showMessageDialog(null , "Must enter a Name");
-        }
-        else {
-        	setmName(NameField.getText());
-        key++;
-        }
+
         
 
         
@@ -222,9 +230,7 @@ public class Medicine extends JFrame {
             }
             
 
-            if(e.getSource()==cancel) {
-                System.exit(0);
-            }
+
 }
 }
 }

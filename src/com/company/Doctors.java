@@ -206,6 +206,10 @@ public class Doctors extends Employees{
                 System.out.println(getdWorkingHrs2());
             }
 
+            if(e.getSource()==cancel) {
+                setVisible(false);
+            }
+
             int key = 0;
 
             try {
@@ -241,8 +245,6 @@ public class Doctors extends Employees{
                             key++;
                         }
 
-
-
                     
                     if (key == 3){
                         String INSERT_1 = "INSERT INTO doctor (D_ID , Firstname , speciliaze , gender , fromworkingHours , toWorkingHours , NumOfPatients) VALUES ("+ getID() +" , '"+ getName() +"' , '"+ getSpecialize() +"'  , '" + getGender() + "' , '"+ getdWorkingHrs() +"' , '"+ getdWorkingHrs2() +"' , "+ getNumOfPatients() +")"; //
@@ -267,9 +269,7 @@ public class Doctors extends Employees{
 
                 }
 
-                if(e.getSource()==cancel) {
-                    System.exit(0);
-                }
+
 
 
 

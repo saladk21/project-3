@@ -185,7 +185,7 @@ public class Nurses extends Employees{
                 }
 
                 if(e.getSource()==cancel) {
-                    System.exit(0);
+                   dispose();
                 }
 
              
